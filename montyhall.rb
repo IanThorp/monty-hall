@@ -35,7 +35,7 @@ class Montyhall
       end
       return true
     end
-    false
+    return false
   end
 
   def winner?
@@ -46,5 +46,19 @@ class Montyhall
     end
   end
 
+  def self.simulate(int)
+    all_results = []
+    all_results <<
+    int.times.map do
+      instance_results = {}
+      monty = Montyhall.new
+      monty.choose_door([*1..3].sample)
+      monty.reveal_door
+      instance_results[:switched] = monty.switch([true, false].sample)
+      instance_results[:winner] = monty.winner?
+      instance_results
+    end
+    return all_results
+  end
 
 end

@@ -23,7 +23,7 @@ class Montyhall
 
   def reveal_door
     remaining_goat_doors = @doors.select do |door|
-      door.number != @chosen && door.prize == "goat"
+      door != @chosen && door.prize == "goat"
     end
     remaining_goat_doors.sample.reveal
   end

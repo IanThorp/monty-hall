@@ -46,9 +46,12 @@ class Montyhall
     end
   end
 
-  def self.simulate(int)
-    all_results = []
-    all_results <<
+  def self.simulate(int=10000)
+    stats = {
+      switch: {wins: 0, losses: 0},
+      no_switch: {wins: 0, losses: 0}
+    }
+    all_results =
     int.times.map do
       instance_results = {}
       monty = Montyhall.new
@@ -56,9 +59,16 @@ class Montyhall
       monty.reveal_door
       instance_results[:switched] = monty.switch([true, false].sample)
       instance_results[:winner] = monty.winner?
+
+      if instance_results[:switched]
+        instance_results[:winner] ? stats[:switch][:wins] += 1 : stats[:switch][:losses] += 1
+      else
+        instance_results[:winner] ? stats[:no_switch][:wins] += 1 : stats[:no_switch][:losses] += 1
+      end
+
       instance_results
     end
-    return all_results
+    return { all_results: all_results, stats: stats }
   end
 
 end
